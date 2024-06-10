@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 
 
 def k_means(x: torch.Tensor, k: int, e: float = 1e-4, mode: str = "EuD"):
@@ -57,3 +58,13 @@ def k_means(x: torch.Tensor, k: int, e: float = 1e-4, mode: str = "EuD"):
 
             if torch.sum(torch.abs(mius - old_mius)) <= e:
                 return tmp_c
+
+
+def gen_label(points: "list[torch.Tensor]"):
+    labels = []
+    for i in range(len(points)):
+        for _ in points[i]:
+            labels.append(i)
+    labels = np.array(labels)
+    rst_points = torch.cat(points, dim=0)
+    return rst_points, labels
